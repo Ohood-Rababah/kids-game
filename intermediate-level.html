@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Intermediate-Level</title>
+    <link href="StyleSheet2.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="nav">
+        <img src="https://img.icons8.com/?size=100&id=55206&format=png&color=000000" />
+
+        <h1>Intermediate Level</h1>
+        <img src="https://img.icons8.com/?size=100&id=lu62FB6JxvaB&format=png&color=000000" />
+        <img src="https://img.icons8.com/?size=100&id=QM0dP5g8D4UH&format=png&color=000000" />
+
+    </div>
+
+    <div id="page2">
+        <div id="padding">
+            <div id="questionsContainer" class="fade-in">
+
+            </div>
+            <button id="submitBtn" onclick="checkAnswers()">Submit Answers</button>
+        </div>
+        <!--<div id="img2">
+            <img src="https://png.pngtree.com/png-vector/20230811/ourmid/pngtree-cartoon-school-boy-with-glasses-holding-backpack-and-book-vector-png-image_6842865.png" />
+        </div>-->
+    </div>
+    <div id="message"></div>
+
+    <audio id="successSound" src="NewFolder1/success-fanfare-trumpets-6185.mp3"></audio>
+    <audio id="failureSound" src="NewFolder1/sad-trumpet-46384.mp3"></audio>
+
+
+
+
+
+
+
+
+
+    <script>
+
+    function generateRandomEquation() {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        const operations = ['+', '-','*'];
+        const randomOperation = operations[Math.floor(Math.random() * operations.length)];
+
+        let question;
+        let answer;
+
+        switch (randomOperation) {
+            case '+':
+                question = `${num1} + ${num2}`;
+                answer = num1 + num2;
+                break;
+            case '-':
+                question = `${num1} - ${num2}`;
+                answer = num1 - num2;
+                break;
+            case '*':
+                question = `${num1} * ${num2}`;
+                answer = num1 * num2;
+                break;
+
+        }
+
+        return { question, answer };
+    }
+
+
+
+    function displayQuestions() {
+        const questionsContainer = document.getElementById('questionsContainer');
+        questionsContainer.innerHTML = '';
+        for (let i = 1; i <= 10; i++) {
+            const equation = generateRandomEquation();
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question-container');
+            questionDiv.innerHTML = `
+                 <h5>Question ${i}:</h5>
+                 <label>${equation.question}</label>
+                 <input class="test-question" id="answer${i}" type="number" placeholder="Your answer here">
+             `;
+            // تأخير الظهور بين كل سؤال والآخر
+            setTimeout(() => {
+                questionsContainer.appendChild(questionDiv);
+            }, i * 200); // كل سؤال يظهر بفارق زمني 200ms
+
+
+            // تخزين الإجابة الصحيحة للإجابة فيما بعد
+            questionDiv.dataset.correctAnswer = equation.answer;
+        }
+    }
+
+
+
+    function checkAnswers() {
+        let score = 0;
+        const questions = document.querySelectorAll('.question-container');
+
+        questions.forEach((question, index) => {
+            const userAnswer = parseInt(document.getElementById(`answer${index + 1}`).value);
+            const correctAnswer = parseInt(question.dataset.correctAnswer);
+
+            if (userAnswer === correctAnswer) {
+                score += 2; // علامتين لكل سؤال صحيح
+            }
+        });
+
+        //alert(`Your score: ${score} out of 10`);
+
+
+
+
+
+        const messageDiv = document.getElementById('message');
+        const successSound = document.getElementById('successSound');
+        const failureSound = document.getElementById('failureSound');
+
+        if (score >= 15) {
+            successSound.play();
+            messageDiv.textContent = "Congratulations! You passed!";
+            messageDiv.style.color = "green";
+
+        } else {
+            failureSound.play();
+            messageDiv.textContent = "Sorry, you did not pass. Try again!";
+            messageDiv.style.color = "red";
+        }
+    }
+
+
+    displayQuestions();
+    </script>
+
+</body>
+</html>

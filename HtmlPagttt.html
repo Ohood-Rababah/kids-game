@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quiz</title>
+   
+</head>
+<body>
+
+    
+    <div id="questionsContainer"></div>
+    <button id="submitBtn" onclick="checkAnswers()">Submit Answers</button>
+
+    <script>
+        function generateRandomEquation() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const operations = ['+', '-', '*'];
+            const randomOperation = operations[Math.floor(Math.random() * operations.length)];
+
+            let question;
+            let answer;
+
+            switch (randomOperation) {
+                case '+':
+                    question = `${num1} + ${num2}`;
+                    answer = num1 + num2;
+                    break;
+                case '-':
+                    question = `${num1} - ${num2}`;
+                    answer = num1 - num2;
+                    break;
+                case '*':
+                    question = `${num1} * ${num2}`;
+                    answer = num1 * num2;
+                    break;
+            }
+
+            return { question, answer };
+        }
+
+        function displayQuestions() {
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const equation = generateRandomEquation();
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-container');
+                questionDiv.innerHTML = `
+                    <h2>Question ${i}:</h2>
+                    <label>${equation.question}</label>
+                    <input id="answer${i}" type="number" placeholder="Your answer here">
+                `;
+                questionsContainer.appendChild(questionDiv);
+
+                // تخزين الإجابة الصحيحة للإجابة فيما بعد
+                questionDiv.dataset.correctAnswer = equation.answer;
+            }
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            const questions = document.querySelectorAll('.question-container');
+
+            questions.forEach((question, index) => {
+                const userAnswer = parseInt(document.getElementById(`answer${index + 1}`).value);
+                const correctAnswer = parseInt(question.dataset.correctAnswer);
+
+                if (userAnswer === correctAnswer) {
+                    score += 2; // علامتين لكل سؤال صحيح
+                }
+            });
+
+            alert(`Your score: ${score} out of 10`);
+        }
+
+        displayQuestions(); // استدعاء دالة عرض الأسئلة عند تحميل الصفحة
+    </script>
+
+</body>
+</html>
