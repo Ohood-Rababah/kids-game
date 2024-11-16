@@ -14,6 +14,6 @@
 }
 //end page1
 
-const backgroundMusic = new Audio('background.mp3'); // موسيقى خلفية
-backgroundMusic.loop = true; // تشغيل الموسيقى في حلقة
+//const backgroundMusic = new Audio('background.mp3'); // موسيقى خلفية
+//backgroundMusic.loop = true; // تشغيل الموسيقى في حلقة
 

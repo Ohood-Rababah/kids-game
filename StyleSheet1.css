@@ -44,7 +44,7 @@ input[type="text"], input[type="number"] {
 }
 
 input:focus {
-    border-color: #ff4500;
+    border-color: #0824a9;
     outline: none;
 }
 
@@ -56,12 +56,13 @@ input:focus {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition:  0.2s;
+    
 }
 
     #startButton:hover {
         background-color: #ff4500;
         transform: scale(1.1);
+        transition: 0.2s;
     }
 
 @keyframes bounce {
@@ -70,7 +71,7 @@ input:focus {
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(10px);
     }
 }
 
